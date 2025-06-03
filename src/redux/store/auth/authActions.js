@@ -4,7 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-} from "../actions/types";
+} from "./types";
 import { jwtDecode } from "jwt-decode";
 
 export const login = (credentials) => async (dispatch) => {

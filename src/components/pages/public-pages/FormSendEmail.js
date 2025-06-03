@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { sendEmailRecoveryPassword } from "../../../redux/store/actions/forgotPasswordActions.js";
-import { clearAllMessages } from '../../../redux/store/actions/clearMessagesActions.js';
+import { sendEmailRecoveryPassword } from "../../../redux/store/recover-password-email/forgotPasswordActions.js";
+import { clearAllMessages } from '../../../redux/store/shared/clearMessagesActions.js';
 import { loginValidator } from "../../../utils/validators/loginValidator.js"; 
 import PopUpSuccess from "../../popups/PopUpSucess.js";
 import PopUpFailure from "../../popups/PopUpFailure.js";

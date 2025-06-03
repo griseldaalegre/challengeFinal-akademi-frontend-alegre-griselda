@@ -5,19 +5,16 @@ const AdminNavbar = () => {
   return (
     <>
       <Link to="/users" className="item">
-        Super Admins
-      </Link>
-      <Link to="/users" className="item">
-        Estudiantes
-      </Link>
-      <Link to="/users" className="item">
-        Profesores
+        Usuarios
       </Link>
       <Link to="/users" className="item">
         Inscripciones
       </Link>
-      <Link to="/users" className="item">
+      <Link to="/courses" className="item">
         Cursos
+      </Link>
+      <Link to="/users" className="item">
+        Calificaciones
       </Link>
     </>
   );

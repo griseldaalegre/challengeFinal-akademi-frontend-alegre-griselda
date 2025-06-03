@@ -7,7 +7,7 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
-} from "../actions/types";
+} from "./types";
 
 export const sendEmailRecoveryPassword = (emailUser) => async (dispatch) => {
   dispatch({ type: SEND_RECOVERY_EMAIL_PASS_REQUEST });

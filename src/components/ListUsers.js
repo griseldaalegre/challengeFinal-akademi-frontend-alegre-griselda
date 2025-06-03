@@ -1,68 +1,90 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import PopUpMessage from "../PopUpMessage";
-import Pagination from "../Pagination";
+import PopUpSucess from "../components/popups/PopUpSucess";
+import PopUpFailure from "../components/popups/PopUpFailure";
+import userImage from "../../src/assets/user.JPG";
+import PopUpDelete from "../components/popups/PopUpDelete";
 
 const ListUsers = ({
   users = [],
-  getUsers,
   deleteUser,
   sendEmailRecoveryPassword,
   recoveryMessage,
   deleteUserMessage,
   clearAllMessages,
-  page = 1,
-  pages = 1,
   editBasePath = "/users",
-  displayField = "email",
-  avatar = () => "./",
 }) => {
-  useEffect(() => {
-    clearAllMessages?.();
-    getUsers?.(page);
-  }, [getUsers, page, clearAllMessages]);
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleConfirmDelete = (id) => {
+    setUserToDelete(id);
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = () => {
+    deleteUser(userToDelete);
+    setShowConfirm(false);
+    setUserToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(false);
+    setUserToDelete(null);
+  };
 
   return (
     <div className="ui middle aligned divided list">
       {users.map((user) => (
         <div key={user._id} className="item">
           <div className="right floated content">
-            <div className="ui button" onClick={() => deleteUser(user._id)}>
-              Remove
+            <div
+              className="ui button"
+              onClick={() => handleConfirmDelete(user._id)}
+            >
+              Eliminar
             </div>
           </div>
-
           <Link
             to={`${editBasePath}/${user._id}`}
             className="right floated content"
           >
-            <div className="ui button">Edit</div>
+            <div className="ui button">Editar</div>
           </Link>
-
           <div className="right floated content">
             <div
               className="ui button"
               onClick={() => sendEmailRecoveryPassword({ email: user.email })}
             >
-              Reset Password
+              Enviar Email Recupero
             </div>
           </div>
-
-          <img className="ui avatar image" src={avatar(user)} alt={user.name} />
-          <div className="content">{user[displayField]}</div>
+          <a className="ui image label">
+            <img
+              className="ui avatar image"
+              src={userImage}
+              alt="Foto de usuario"
+            />
+          </a>
+          <div className="content">
+            <div>
+              <strong>Nombre:</strong> {user.name}
+            </div>
+            <div>
+              <strong>Rol:</strong> {user.role}
+            </div>
+          </div>
         </div>
       ))}
+      <PopUpDelete
+        show={showConfirm}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+        message={"¿Seguro que querés eliminar este usuario?"}
+      />
 
-      {recoveryMessage && <PopUpMessage message={recoveryMessage} />}
-      {deleteUserMessage && <PopUpMessage message={deleteUserMessage} />}
-
-      {pages > 1 && (
-        <Pagination
-          totalPages={pages}
-          currentPage={page}
-          onPageChange={(newPage) => getUsers(newPage)}
-        />
-      )}
+      {recoveryMessage && <PopUpSucess message={recoveryMessage} />}
+      {deleteUserMessage && <PopUpFailure message={deleteUserMessage} />}
     </div>
   );
 };

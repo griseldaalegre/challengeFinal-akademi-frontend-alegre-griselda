@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../redux/store/actions/authActions";
+import { logout } from "../redux/store/auth/authActions";
 import AdminNavbar from "./NavbarAdmin";
 const Navbar = ({ user, logout }) => {
   return (

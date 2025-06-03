@@ -3,7 +3,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-} from "../actions/types";
+}from "./types";
 
 export const registerUser = (studentData) => async (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });

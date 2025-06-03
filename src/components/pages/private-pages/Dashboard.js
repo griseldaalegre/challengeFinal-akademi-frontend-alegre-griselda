@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getStatesGeneral } from "../../../redux/store/actions/superAdminActions";
+import { getStatesGeneral } from "../../../redux/store/superadmin/superAdminActions";
 
 const Dashboard = ({ getStatesGeneral, states }) => {
   useEffect(() => {

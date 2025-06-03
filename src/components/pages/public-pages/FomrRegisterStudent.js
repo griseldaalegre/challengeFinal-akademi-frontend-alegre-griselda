@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { registerUser } from "../../../redux/store/actions/registerActions.js";
-import { clearAllMessages } from '../../../redux/store/actions/clearMessagesActions.js';
+import { registerUser } from "../.././../redux/store/register/registerActions.js";
+import { clearAllMessages } from "../../../redux/store/shared/clearMessagesActions.js";
 
 import { registerValidator } from "../../../utils/validators/registerValidator.js";
 import PopUpSuccess from "../../popups/PopUpSucess.js";
 import PopUpFailure from "../../popups/PopUpFailure.js";
 
-const FormRegister = ({
+const FomrRegisterStudent = ({
   registerUser,
   errorMessage,
   loading,
   successMessage,
-  clearAllMessages
+  clearAllMessages,
 }) => {
   const {
     register,
@@ -27,20 +27,17 @@ const FormRegister = ({
 
   const onSubmit = (dataNewUser) => {
     registerUser(dataNewUser);
-
   };
 
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
         clearAllMessages();
-
         navigate("/");
-      }, 9000); 
-      return () => clearTimeout(timer); 
+      }, 9000);
+      return () => clearTimeout(timer);
     }
-  }, [successMessage, navigate]);
-  
+  }, [successMessage, navigate, clearAllMessages]);
 
   return (
     <div className="ui placeholder segment">
@@ -50,9 +47,9 @@ const FormRegister = ({
             <div className={`field ${errors.email ? "error" : ""}`}>
               <label>Nombre </label>
               <input
-                {...register("name", registerValidator.name)}
                 type="text"
                 name="name"
+                {...register("name", registerValidator.name)}
               />
               {errors.name && (
                 <p className="ui pointing red basic label">
@@ -64,9 +61,9 @@ const FormRegister = ({
             <div className={`field ${errors.dni ? "error" : ""}`}>
               <label>DNI</label>
               <input
-                {...register("dni", registerValidator.dni)}
                 type="text"
                 name="dni"
+                {...register("dni", registerValidator.dni)}
               />
               {errors.dni && (
                 <p className="ui pointing red basic label">
@@ -78,9 +75,9 @@ const FormRegister = ({
             <div className={`field ${errors.email ? "error" : ""}`}>
               <label>Email</label>
               <input
-                {...register("email", registerValidator.email)}
                 type="email"
                 name="email"
+                {...register("email", registerValidator.email)}
               />
               {errors.email && (
                 <p className="ui pointing red basic label">
@@ -92,9 +89,9 @@ const FormRegister = ({
             <div className={`field ${errors.password ? "error" : ""}`}>
               <label>Password</label>
               <input
-                {...register("password", registerValidator.password)}
                 type="password"
                 name="password"
+                {...register("password", registerValidator.password)}
               />
               {errors.password && (
                 <p className="ui pointing red basic label">
@@ -114,15 +111,13 @@ const FormRegister = ({
                 </button>
               </div>
             </div>
-
-          
           </form>
         </div>
         <>
           {!loading && successMessage && (
             <PopUpSuccess
-              message={successMessage}
-              header="Email de recuperacion enviado"
+              header={successMessage}
+              message="Ya puede loguearse"
             />
           )}
 
@@ -146,7 +141,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   registerUser,
-  clearAllMessages
+  clearAllMessages,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormRegister);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FomrRegisterStudent);

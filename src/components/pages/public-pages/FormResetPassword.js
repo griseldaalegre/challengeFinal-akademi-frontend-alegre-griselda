@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import {  useParams } from "react-router-dom";
-import { resetPassword } from "../../../redux/store/actions/forgotPasswordActions";
+import { resetPassword } from "../../../redux/store/recover-password-email/forgotPasswordActions";
 import { loginValidator } from "../../../utils/validators/loginValidator";
 import PopUpSuccess from "../../popups/PopUpSucess";
 import PopUpFailure from "../../popups/PopUpFailure";

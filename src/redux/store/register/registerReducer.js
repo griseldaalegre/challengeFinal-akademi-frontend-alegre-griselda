@@ -3,7 +3,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   CLEAR_ALL_MESSAGES
-} from "../actions/types";
+} from "./types";
 
 const initialState = {
   loading: false,

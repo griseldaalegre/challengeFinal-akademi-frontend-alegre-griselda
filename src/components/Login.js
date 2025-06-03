@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import { login } from "../../../redux/store/auth/authActions";
+import { login } from "../redux/store/auth/authActions";
 import { useNavigate, Link } from "react-router-dom";
 import { loginValidator } from "../../../utils/validators/loginValidator";
 
@@ -40,9 +40,9 @@ const LoginForm = ({ user, error, login, loading }) => {
             <div className={`field ${errors.email ? "error" : ""}`}>
               <label>Email</label>
               <input
-                {...register("email", loginValidator.email)}
                 type="email"
                 name="email"
+                {...register("email", loginValidator.email)}
               />
               {errors.email && (
                 <p className="ui pointing red basic label">
@@ -54,9 +54,9 @@ const LoginForm = ({ user, error, login, loading }) => {
             <div className={`field ${errors.password ? "error" : ""}`}>
               <label>Password</label>
               <input
-                {...register("password", loginValidator.password)}
                 type="password"
                 name="password"
+                {...register("password", loginValidator.password)}
               />
               {errors.password && (
                 <p className="ui pointing red basic label">
@@ -106,7 +106,7 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   error: state.auth.error,
   messageSucess: state.auth.successMessage,
-  user: state.auth.user, 
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { login })(LoginForm);
