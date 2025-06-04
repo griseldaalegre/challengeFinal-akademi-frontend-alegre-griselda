@@ -18,12 +18,6 @@ import {
   GET_COURSES_REQUEST,
   GET_COURSES_FAILURE,
   GET_COURSES_SUCCESS,
-  UPDATE_COURSE_REQUEST,
-  UPDATE_COURSE_FAILURE,
-  UPDATE_COURSE_SUCCESS,
-  ADD_COURSE_REQUEST,
-  ADD_COURSE_SUCCESS,
-  ADD_COURSE_FAILURE,
 } from "./types";
 
 export const getStatesGeneral = () => async (dispatch) => {
@@ -119,12 +113,10 @@ export const addUser = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADD_USER_FAILURE,
-      error: error.response?.data?.message || "Error al agregar usuario", // mensaje de error
+      error: error.response?.data?.message || "Error al agregar usuario", 
     });
   }
 };
-
-//CURSOS
 
 export const getCourses =
   (page = 1, filters = {}) =>
@@ -132,13 +124,12 @@ export const getCourses =
     dispatch({ type: GET_COURSES_REQUEST });
 
     try {
-      // Convertimos los filtros a query params
       const query = new URLSearchParams({ page, ...filters }).toString();
       const response = await api.get(`/courses?${query}`);
 
       dispatch({
         type: GET_COURSES_SUCCESS,
-        payload: response.data, // debe incluir data, page, pages, total
+        payload: response.data, 
       });
     } catch (error) {
       dispatch({
@@ -148,60 +139,4 @@ export const getCourses =
     }
   };
 
-//revisar
-export const deleteCourse = (id) => async (dispatch) => {
-  dispatch({ type: DELETE_USER_REQUEST });
 
-  try {
-    const response = await api.delete(`/users/${id}`);
-
-    dispatch({
-      type: DELETE_USER_SUCCESS,
-      payload: id,
-      message: response.data.message, // mensaje de éxito
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_USER_FAILURE,
-      error: error.response?.data?.message || "Error al eliminar usuario", // mensaje de error
-    });
-  }
-};
-
-//ibas haciendo esto
-export const editCourse = (id, updatedData) => async (dispatch) => {
-  dispatch({ type: UPDATE_COURSE_REQUEST });
-  try {
-    const response = await api.patch(`/courses/${id}`, updatedData);
-
-    dispatch({
-      type: UPDATE_COURSE_SUCCESS,
-      payload: { id, updatedData: response.data },
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_COURSE_FAILURE,
-      message: error.response?.data?.message || "Error actualizar curso",
-    });
-  }
-};
-
-export const addCourse = (userData) => async (dispatch) => {
-  dispatch({ type: ADD_COURSE_REQUEST });
-
-  try {
-    const response = await api.post("/users", {
-      ...userData,
-    });
-
-    dispatch({
-      type: ADD_COURSE_SUCCESS,
-      payload: response.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ADD_COURSE_FAILURE,
-      error: error.response?.data?.message || "Error al agregar usuario", // mensaje de error
-    });
-  }
-};

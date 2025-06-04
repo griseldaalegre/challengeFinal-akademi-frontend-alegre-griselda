@@ -3,6 +3,7 @@ import authReducer from "../auth/authReducer";
 import registerReducer from "../register/registerReducer";
 import forgotPasswordReducer from "../recover-password-email/forgotPasswordReducer";
 import superAdminReducer from "../superadmin/superAdminReducer";
+import professorReducer from "../professor/professorReducer";
 import { clearAllMessages } from "../shared/clearMessagesActions";
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   recoverPassword: forgotPasswordReducer,
   clearMessages: clearAllMessages,
   superadmin: superAdminReducer, 
+  professor: professorReducer
 });
 
 export default rootReducer;

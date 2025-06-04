@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../redux/store/auth/authActions";
 import AdminNavbar from "./NavbarAdmin";
+import NavbarProfessor from "./NavbarProfessor";
 const Navbar = ({ user, logout }) => {
   return (
     <div
@@ -20,11 +21,13 @@ const Navbar = ({ user, logout }) => {
 
         {user && (
           <>
-            <Link to="/dashboard" className="item">
+            <Link to="superadmin/dashboard" className="item">
               Dashboard
             </Link>
 
             {user.role === "superadmin" && <AdminNavbar />}
+
+            {user.role === "professor" && <NavbarProfessor />}
           </>
         )}
 

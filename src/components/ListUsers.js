@@ -12,7 +12,7 @@ const ListUsers = ({
   recoveryMessage,
   deleteUserMessage,
   clearAllMessages,
-  editBasePath = "/users",
+  editBasePath = "/superadmin",
 }) => {
   const [userToDelete, setUserToDelete] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);

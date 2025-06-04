@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import {
   addUser,
   editUser,
-} from "../../../redux/store/superadmin/superAdminActions";
-import { registerValidator } from "../../../utils/validators/registerValidator";
+} from "../../../../redux/store/superadmin/superAdminActions";
+import { registerValidator } from "../../../../utils/validators/registerValidator";
 
 const FormUser = ({ users, currentUser, addUser, editUser }) => {
   const { id } = useParams();
@@ -42,7 +42,7 @@ const FormUser = ({ users, currentUser, addUser, editUser }) => {
       addUser(data);
     }
 
-    navigate("/users");
+    navigate("/superadmin/users");
   };
 
   return (

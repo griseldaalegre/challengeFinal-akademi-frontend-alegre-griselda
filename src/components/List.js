@@ -1,0 +1,81 @@
+//voy a listar los cursos y las calificaciones
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+import PopUpSucess from "./popups/PopUpSucess";
+import PopUpFailure from "./popups/PopUpFailure";
+import PopUpDelete from "./popups/PopUpDelete";
+
+const List = ({
+  items = [],
+  deleteItem,
+  editBasePath = "/",
+  renderItem, //enntidad a dibujar,
+  successMessage,
+  deleteUserMessage,
+}) => {
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleConfirmDelete = (id) => {
+    setItemToDelete(id);
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = () => {
+    deleteItem(itemToDelete);
+    setShowConfirm(false);
+    setItemToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(false);
+    setItemToDelete(null);
+  };
+
+  return (
+    <div className="ui middle aligned divided list">
+      {items.map((item) => (
+        <div key={item._id} className="item">
+          <div className="right floated content">
+            {deleteItem && (
+              <div
+                className="ui button"
+                onClick={() => handleConfirmDelete(item._id)}
+              >
+                Eliminar
+              </div>
+            )}
+
+            <Link
+              to={`${editBasePath}/${item._id}`}
+              className="right floated content"
+            >
+              <div className="ui button">Editar</div>
+            </Link>
+
+            <Link
+              to={`${editBasePath}/${item._id}`}
+              className="right floated content"
+            >
+              <div className="ui button">Ver Detalle</div>
+            </Link>
+          </div>
+          {renderItem(item)}
+        </div>
+      ))}
+
+      <PopUpDelete
+        show={showConfirm}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+        message={"¿Seguro que querés eliminar este elemento?"}
+      />
+
+      {successMessage && <PopUpSucess message={successMessage} />}
+      {deleteUserMessage && <PopUpFailure message={deleteUserMessage} />}
+    </div>
+  );
+};
+
+export default List;

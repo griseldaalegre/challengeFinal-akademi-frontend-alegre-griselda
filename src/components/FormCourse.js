@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import {getUsers} from "../redux/store/superadmin/superAdminActions";
 import {
   addCourse,
   editCourse,
-} from "../redux/store/superadmin/superAdminActions";
+} from "../redux/store/professor/professorActions";
 import { courseValidator } from "../utils/validators/courseValidator";
 
-const FormCourse = ({ courses,getUsers , professors, addCourse, editCourse }) => {
+const FormCourse = ({ courses, addCourse, editCourse, profesorAuth }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -23,6 +22,7 @@ const FormCourse = ({ courses,getUsers , professors, addCourse, editCourse }) =>
   useEffect(() => {
     if (id) {
       const courseToEdit = courses.find((c) => c._id === id);
+
       if (courseToEdit) {
         setValue("title", courseToEdit.title);
         setValue("description", courseToEdit.description);
@@ -30,24 +30,23 @@ const FormCourse = ({ courses,getUsers , professors, addCourse, editCourse }) =>
         setValue("level", courseToEdit.level);
         setValue("price", courseToEdit.price);
         setValue("capacity", courseToEdit.capacity);
-        setValue("professor", courseToEdit.professor);
       }
+      console.log(courseToEdit);
     }
   }, [id, courses, setValue]);
 
-  useEffect(() => {
-    if (professors.length === 0) {
-      getUsers(); 
+  const onSubmit = async (data) => {
+    if (!id) {
+      data.professor = profesorAuth._id;
     }
-  }, [professors, getUsers]);
 
-  const onSubmit = (data) => {
     if (id) {
-      editCourse(id, data);
+      await editCourse(id, data);
     } else {
-      addCourse(data);
+      await addCourse(data);
     }
-    navigate("/courses");
+
+    navigate("/professor");
   };
 
   return (
@@ -131,26 +130,6 @@ const FormCourse = ({ courses,getUsers , professors, addCourse, editCourse }) =>
           )}
         </div>
 
-        <div className={`field ${errors.professor ? "error" : ""}`}>
-          <label>Profesor</label>
-          <select
-            {...register("professor", courseValidator.professor)}
-            className="ui dropdown"
-          >
-            <option value="">Seleccionar profesor</option>
-            {professors.map((p) => (
-              <option key={p._id} value={p._id}>
-                {p.name}
-              </option>
-            ))}
-          </select>
-          {errors.professor && (
-            <div className="ui pointing red basic label">
-              {errors.professor.message}
-            </div>
-          )}
-        </div>
-
         <div className="ui buttons">
           <button
             className="ui button"
@@ -170,15 +149,13 @@ const FormCourse = ({ courses,getUsers , professors, addCourse, editCourse }) =>
 };
 
 const mapStateToProps = (state) => ({
-  courses: state.superadmin.courses,
-  professors: state.superadmin.users.filter((u) => u.role === "professor"), // asumiendo que los profes están ahí
+  profesorAuth: state.auth.user,
+  courses: state.professor.courses, // Ajustá si lo tenés en otro lugar
 });
 
 const mapDispatchToProps = {
-  getUsers,
   addCourse,
   editCourse,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormCourse);

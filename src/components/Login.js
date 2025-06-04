@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+/*import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { login } from "../redux/store/auth/authActions";
@@ -20,7 +20,8 @@ const LoginForm = ({ user, error, login, loading }) => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      console.log(user.role)
+      navigate(`/${user.role}/dashboard`); //cuando me logueo revisar el rol
     }
   }, [user, navigate]);
 
@@ -109,4 +110,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { login })(LoginForm);
+export default connect(mapStateToProps, { login })(LoginForm);*/

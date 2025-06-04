@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import {
-  getCourses,
-  deleteCourse,
-} from "../../../redux/store/superadmin/superAdminActions";
-import { clearAllMessages } from "../../../redux/store/shared/clearMessagesActions";
 
-import ListIems from "../../ListIems";
-import RenderCourses from "../../RenderCourse";
+import { getCourses } from "../../../../redux/store/superadmin/superAdminActions";
+import { clearAllMessages } from "../../../../redux/store/shared/clearMessagesActions";
 
-import Pagination from "../../Pagination";
+import ListIems from "../../../ListIems";
+import RenderCourses from "../../../RenderCourse"; // ruta correcta según dónde esté
+
+import Pagination from "../../../Pagination";
 
 const CoursesPage = ({
   courses,
   page,
   pages,
   getCourses,
-  deleteCourse,
+
   clearAllMessages,
 }) => {
   const [category, setCategory] = useState("");
@@ -35,30 +32,14 @@ const CoursesPage = ({
     getCourses(page, filters);
   }, [getCourses, clearAllMessages, page, category, level, price]);
 
-  const onResetFilter = () => {
-    setCategory("");
-    setLevel("");
-    setPrice("");
-    page = 1;
-  };
-
   return (
     <div>
       <div className="ui grid">
         <div className="row">
           <div className="eight wide column left aligned">
-            <h2>Listado de Usuarios</h2>
+            <h2>Listado de Cursos</h2>
           </div>
-
-          <div className="field container-btn">
-            <button className="ui grey button" onClick={onResetFilter}>
-              Restaurar filtros
-            </button>
-          </div>
-
-          <div className="eight wide column  aligned">
-
-
+          <div className="eight wide column right aligned">
             {/* fitro por categoria */}
             <select
               value={category}
@@ -84,19 +65,15 @@ const CoursesPage = ({
             <select value={price} onChange={(e) => setPrice(e.target.value)}>
               <option value="">Precio</option>
               <option value="0">Gratuito</option>
-              <option value=">0">Pago</option>
+              <option value="100">Pago</option>
             </select>
           </div>
         </div>
       </div>
-      <Link to={"/course/add"} className="right floated content">
-        <div className="ui button">Crear Curso</div>
-      </Link>
       <ListIems
         items={courses}
-        deleteItem={deleteCourse}
         renderItem={RenderCourses}
-        editBasePath="/courses"
+        editBasePath="superadmin/courses"
       />
 
       {pages > 1 && (
@@ -119,7 +96,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getCourses,
-  deleteCourse,
   clearAllMessages,
 };
 

@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import {
   getUsers,
   deleteUser,
-} from "../../../redux/store/superadmin/superAdminActions";
-import { sendEmailRecoveryPassword } from "../../../redux/store/recover-password-email/forgotPasswordActions";
-import { clearAllMessages } from "../../../redux/store/shared/clearMessagesActions";
+} from "../../../../redux/store/superadmin/superAdminActions";
+import { sendEmailRecoveryPassword } from "../../../../redux/store/recover-password-email/forgotPasswordActions";
+import { clearAllMessages } from "../../../../redux/store/shared/clearMessagesActions";
 
-import ListUsers from "../../ListUsers";
-import Pagination from "../../Pagination";
-import Search from "../../Search";
+import ListUsers from "../../../ListUsers";
+import Pagination from "../../../Pagination";
+import Search from "../../../Search";
 
 const UserListPage = ({
   users,
@@ -77,7 +77,7 @@ const UserListPage = ({
         recoveryMessage={recoveryMessage}
         deleteUserMessage={deleteUserMessage}
         clearAllMessages={clearAllMessages}
-        editBasePath="/users"
+        editBasePath="/superadmin/users"
       />
 
       {pages > 1 && (

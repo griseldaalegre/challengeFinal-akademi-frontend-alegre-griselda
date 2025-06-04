@@ -7,11 +7,12 @@ const RenderCourse = (course) => (
       <strong>Categoría:</strong> {course.category}
     </div>
     <div>
-    <strong>Profesor:</strong> {course.professor.name ?? "N/A"}
+      <strong>Profesor:</strong> {course.professor?.name ?? "N/A"}
     </div>
     <div>
-      <strong>Categoría:</strong> {course.price}
+      <strong>Precio:</strong> {course.price}
     </div>
   </div>
 );
+
 export default RenderCourse;
