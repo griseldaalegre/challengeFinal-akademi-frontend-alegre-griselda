@@ -1,3 +1,6 @@
+
+
+
 const RenderCourse = (course) => (
   <div className="content">
     <div>
@@ -12,7 +15,9 @@ const RenderCourse = (course) => (
     <div>
       <strong>Precio:</strong> {course.price}
     </div>
+
   </div>
 );
 
 export default RenderCourse;
+

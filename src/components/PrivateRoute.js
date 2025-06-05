@@ -3,8 +3,6 @@ import { Navigate, Outlet } from "react-router-dom";
 import { connect } from "react-redux";
 
 const PrivateRoute = ({ user, allowedRoles }) => {
-    console.log(user)
-
   if (!user) {
 
     return <Navigate to="/login" />;

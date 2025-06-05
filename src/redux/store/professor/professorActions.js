@@ -21,6 +21,9 @@ import {
   ADD_GRADE_REQUEST,
   ADD_GRADE_SUCCESS,
   ADD_GRADE_FAILURE,
+  EDIT_GRADE_REQUEST,
+  EDIT_GRADE_SUCCESS,
+  EDIT_GRADE_FAILURE
 } from "./type";
 
 export const getCourses =
@@ -154,6 +157,29 @@ export const addGrade = (gradeData) => async (dispatch) => {
     dispatch({
       type: ADD_GRADE_FAILURE,
       payload: error.response?.data?.message || "Error al cargar calificación",
+    });
+  }
+};
+
+
+export const editGrade = (id, updatedData) => async (dispatch) => {
+  dispatch({ type: EDIT_GRADE_REQUEST });
+
+  try {
+    const response = await api.patch(`/grades/student/${id}`, updatedData);
+
+    dispatch({
+      type: EDIT_GRADE_SUCCESS,
+      payload: {
+        id,
+        updatedData: response.data,
+        message: "Nota actualizada con éxito",
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: EDIT_GRADE_FAILURE,
+      payload: error.response?.data?.message || "Error al editar calificación",
     });
   }
 };

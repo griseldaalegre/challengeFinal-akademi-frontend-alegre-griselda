@@ -13,6 +13,8 @@ const List = ({
   renderItem, //enntidad a dibujar,
   successMessage,
   deleteUserMessage,
+  message,
+  textBtnDelete = "Eliminar",
 }) => {
   const [itemToDelete, setItemToDelete] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -38,22 +40,20 @@ const List = ({
       {items.map((item) => (
         <div key={item._id} className="item">
           <div className="right floated content">
-            {deleteItem && (
+            <div className="right floated content">
               <div
                 className="ui button"
                 onClick={() => handleConfirmDelete(item._id)}
               >
-                Eliminar
+                {textBtnDelete}
               </div>
-            )}
-
+            </div>
             <Link
               to={`${editBasePath}/${item._id}`}
               className="right floated content"
             >
               <div className="ui button">Editar</div>
             </Link>
-
             <Link
               to={`${editBasePath}/${item._id}`}
               className="right floated content"
@@ -61,6 +61,7 @@ const List = ({
               <div className="ui button">Ver Detalle</div>
             </Link>
           </div>
+
           {renderItem(item)}
         </div>
       ))}
@@ -69,7 +70,7 @@ const List = ({
         show={showConfirm}
         onCancel={cancelDelete}
         onConfirm={confirmDelete}
-        message={"¿Seguro que querés eliminar este elemento?"}
+        message={message}
       />
 
       {successMessage && <PopUpSucess message={successMessage} />}

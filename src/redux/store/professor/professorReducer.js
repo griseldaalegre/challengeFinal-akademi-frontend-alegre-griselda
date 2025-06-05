@@ -20,6 +20,9 @@ import {
   ADD_GRADE_REQUEST,
   ADD_GRADE_SUCCESS,
   ADD_GRADE_FAILURE,
+  EDIT_GRADE_REQUEST,
+  EDIT_GRADE_SUCCESS,
+  EDIT_GRADE_FAILURE
 } from "./type";
 
 const initialState = {
@@ -214,6 +217,37 @@ export default function statesReducer(state = initialState, action) {
       };
 
     case ADD_GRADE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        successMessage: null,
+      };
+
+    case EDIT_GRADE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        successMessage: null,
+      };
+
+
+      case EDIT_GRADE_SUCCESS:
+        return {
+          ...state,
+          grades: state.grades.map((grade) =>
+            grade._id === action.payload.updatedData._id
+              ? action.payload.updatedData
+              : grade
+          ),
+          successMessage: action.payload.message,
+          loading: false,
+        };
+      
+
+
+    case EDIT_GRADE_FAILURE:
       return {
         ...state,
         loading: false,

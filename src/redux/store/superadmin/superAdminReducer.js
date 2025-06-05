@@ -29,7 +29,8 @@ const initialState = {
   error: null,
 };
 
-export default function statesReducer(state = initialState, action) {
+//cambiar nombre abtes era stareReducer
+export default function superAdminReducer(state = initialState, action) {
   switch (action.type) {
     case GET_STATES_GENERAL_REQUEST:
       return {

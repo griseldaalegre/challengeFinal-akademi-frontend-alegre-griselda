@@ -5,6 +5,7 @@ import {
   addGrade,
   getEnrollmentsByCourse,
   getGradesByCourse,
+  editGrade
 } from "../../../../redux/store/professor/professorActions";
 import ListItems from "../../../ListIems";
 import RenderEnrollment from "../../../RenderEnrollment";
@@ -42,7 +43,7 @@ const CourseDetailPage = ({
   });
 
   const renderItem = (enrollment) => (
-    <RenderEnrollment enrollment={enrollment} onSubmitGrade={handleSubmitGrade} />
+    <RenderEnrollment enrollment={enrollment} onSubmitGrade={handleSubmitGrade}  onEditGrade={editGrade}  />
   );
 
   return (
@@ -69,6 +70,7 @@ const mapDispatchToProps = {
   getEnrollmentsByCourse,
   getGradesByCourse,
   addGrade,
+  editGrade
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseDetailPage);

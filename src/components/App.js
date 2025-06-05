@@ -5,20 +5,26 @@ import NavBar from "./NavBar";
 import { loadUserFromToken } from "../redux/store/auth/authActions";
 
 import PrivateRoute from "../components/PrivateRoute";
+//imports del rutas publicas
 import FomrRegisterStudent from "./pages/public-pages/FomrRegisterStudent";
 import Login from "./pages/public-pages/Login";
 import FormSendEmail from "./pages/public-pages/FormSendEmail";
 import FormResetPassword from "./pages/public-pages/FormResetPassword";
-
+//imports del admin
 import Dashboard from "./pages/private-pages/superadmin/Dashboard";
 import UserListPage from "./pages/private-pages/superadmin/UserListPage";
 import FormUser from "./pages/private-pages/superadmin/FormUser";
 import CoursesPage from "./pages/private-pages/superadmin/CoursesPage";
-
-import CoursesPageProfessor from "./pages/private-pages/professor/CoursesPage";
+//imports del profe
 import DashboadProfessor from "./pages/private-pages/professor/DashboadProfessor";
 import FormCourse from "./FormCourse";
 import CourseDetailPage from "./pages/private-pages/professor/CourseDetailPage";
+import CourseStudentDetailPage from "./pages/private-pages/student/CourseStudentDetailPage";
+
+//import CoursesPageProfessor from "./pages/private-pages/professor/CoursesPage";
+import DashboadStudent from "../components/pages/private-pages/student/DashboardStudent";
+import MyCoursePage from "../components/pages/private-pages/student/MyCoursePage";
+import GradesStudentPage from "../components/pages/private-pages/student/GradesStudentPage";
 
 const App = ({ loadUserFromToken, loading, authChecked }) => {
   useEffect(() => {
@@ -84,7 +90,10 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
           >
             <Route index element={<Navigate to="courses" replace />} />
 
-            <Route path="courses" element={<CoursesPageProfessor />} />
+            <Route path="courses" element={<DashboadStudent />} />
+            <Route path="courses/:id" element={<CourseStudentDetailPage />} />
+            <Route path="mycourses" element={<MyCoursePage />} />
+            <Route path="grades" element={<GradesStudentPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

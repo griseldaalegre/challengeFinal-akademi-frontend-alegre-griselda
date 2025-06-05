@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../redux/store/auth/authActions";
-import AdminNavbar from "./NavbarAdmin";
-import NavbarProfessor from "./NavbarProfessor";
+import AdminNavbar from "./navbars/NavbarAdmin";
+import NavbarProfessor from "./navbars/NavbarProfessor";
+import NavbarStudent from "./navbars/NavbarStudent";
 const Navbar = ({ user, logout }) => {
   return (
     <div
@@ -28,6 +29,8 @@ const Navbar = ({ user, logout }) => {
             {user.role === "superadmin" && <AdminNavbar />}
 
             {user.role === "professor" && <NavbarProfessor />}
+
+            {user.role === "student" && <NavbarStudent />}
           </>
         )}
 
@@ -41,7 +44,7 @@ const Navbar = ({ user, logout }) => {
           ) : (
             <>
               <div className="item">
-                <span style={{ fontWeight: "500" }}>Hola, {user.name}</span>
+                <span style={{ fontWeight: "500" }}>Hola, {user.name}, {user.role}</span>
               </div>
               <div className="item">
                 <button onClick={logout} className="ui button">
