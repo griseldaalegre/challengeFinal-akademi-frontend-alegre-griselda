@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,Link } from "react-router-dom";
+
 import { connect } from "react-redux";
 import {
   addUser,
@@ -123,9 +124,10 @@ const FormUser = ({ users, currentUser, addUser, editUser }) => {
         )}
 
         <div className="ui buttons">
-          <button className="ui button" type="button">
+          <Link to="/superadmin/users" className="ui button" type="button">
             Cancelar
-          </button>
+          </Link>
+
           <div className="or"></div>
           <button className="ui primary button" type="submit">
             {id ? "Editar usuario" : "Crear usuario"}
@@ -138,7 +140,7 @@ const FormUser = ({ users, currentUser, addUser, editUser }) => {
 
 const mapStateToProps = (state) => ({
   users: state.superadmin.users,
-  currentUser: state.auth.user, 
+  currentUser: state.auth.user,
 });
 
 export default connect(mapStateToProps, { addUser, editUser })(FormUser);

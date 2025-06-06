@@ -6,20 +6,34 @@ import { clearAllMessages } from "../../../../redux/store/shared/clearMessagesAc
 
 import ListIems from "../../../ListIems";
 import RenderCourses from "../../../RenderCourse"; // ruta correcta según dónde esté
-
+import Loading from "../../../Loading";
 import Pagination from "../../../Pagination";
+import GridItems from "../../../RenderGrid";
 
 const CoursesPage = ({
   courses,
   page,
   pages,
   getCourses,
-
+  loading,
   clearAllMessages,
 }) => {
   const [category, setCategory] = useState("");
   const [level, setLevel] = useState("");
   const [price, setPrice] = useState("");
+
+    const openModal = (course) => {
+    setSelectedCourse(course);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedCourse(null);
+  };
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
 
   useEffect(() => {
     clearAllMessages();
@@ -32,6 +46,7 @@ const CoursesPage = ({
     getCourses(page, filters);
   }, [getCourses, clearAllMessages, page, category, level, price]);
 
+  
   return (
     <div>
       <div className="ui grid">
@@ -70,18 +85,25 @@ const CoursesPage = ({
           </div>
         </div>
       </div>
-      <ListIems
-        items={courses}
-        renderItem={RenderCourses}
-        editBasePath="superadmin/courses"
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+     
 
-      {pages > 1 && (
-        <Pagination
-          totalPages={pages}
-          currentPage={page}
-          onPageChange={(newPage) => getCourses(newPage)}
-        />
+          <GridItems
+            items={courses}
+            renderItem={RenderCourses}
+          />
+
+          {pages > 1 && (
+            <Pagination
+              totalPages={pages}
+              currentPage={page}
+              onPageChange={(newPage) => getCourses(newPage)}
+            />
+          )}
+        </>
       )}
     </div>
   );
@@ -92,6 +114,7 @@ const mapStateToProps = (state) => ({
   page: state.superadmin.page,
   pages: state.superadmin.pages,
   deleteMessage: state.superadmin.deleteUserMessage,
+  loading: state.superadmin.loading,
 });
 
 const mapDispatchToProps = {

@@ -5,10 +5,11 @@ import {
   addGrade,
   getEnrollmentsByCourse,
   getGradesByCourse,
+  editGrade,
 } from "../../../../redux/store/professor/professorActions";
 import ListItems from "../../../ListIems";
 import RenderEnrollment from "../../../RenderEnrollment";
-
+import Loading from "../../../Loading";
 const CourseDetailPage = ({
   enrollments,
   grades,
@@ -18,7 +19,7 @@ const CourseDetailPage = ({
   getEnrollmentsByCourse,
   getGradesByCourse,
   addGrade,
-  editGrade
+  editGrade,
 }) => {
   const { id: paramId } = useParams();
 
@@ -27,13 +28,29 @@ const CourseDetailPage = ({
     getGradesByCourse(paramId);
   }, [paramId, getEnrollmentsByCourse, getGradesByCourse]);
 
+  useEffect(() => console.log(grades))
+
   const handleSubmitGrade = (studentId, score) => {
-    addGrade({ course: paramId, student: studentId, score });
+    const gradeOfStudent = grades.find(
+      (g) => String(g.student) === String(studentId) && String(g.course) === String(paramId)
+    );
+    
+
+    if (gradeOfStudent) {
+      editGrade(gradeOfStudent._id, { score });
+    } else {
+      addGrade({ student: studentId, course: paramId, score });
+    }
+
   };
 
-  const enrollmentsWithGrades = enrollments.map((enrollment) => {
+  const enrollmentsWithGrades = enrollments
+  .filter((enrollment) => enrollment.student && enrollment.student._id)
+  .map((enrollment) => {
     const grade = grades.find(
-      (g) => g.student === enrollment.student._id && g.course === paramId
+      (g) =>
+        String(g.student) === String(enrollment.student._id) &&
+        String(g.course) === String(paramId)
     );
     return {
       ...enrollment,
@@ -42,14 +59,18 @@ const CourseDetailPage = ({
   });
 
   const renderItem = (enrollment) => (
-    <RenderEnrollment enrollment={enrollment} onSubmitGrade={handleSubmitGrade} />
+    <RenderEnrollment
+      enrollment={enrollment}
+      onSubmitGrade={handleSubmitGrade}
+      onEditGrade={editGrade}
+    />
   );
 
   return (
     <div className="ui container">
       <h2 className="ui dividing header">Alumnos inscriptos</h2>
       {loading ? (
-        <p>Cargando...</p>
+        <Loading />
       ) : (
         <ListItems items={enrollmentsWithGrades} renderItem={renderItem} />
       )}
@@ -69,6 +90,7 @@ const mapDispatchToProps = {
   getEnrollmentsByCourse,
   getGradesByCourse,
   addGrade,
+  editGrade,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseDetailPage);

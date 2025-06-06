@@ -4,12 +4,17 @@ import { Link } from "react-router-dom";
 const NavbarProfessor = () => {
   return (
     <>
-      <Link to="professor/courses" className="item">
-        Cursos
+      <Link to="professor/dashboard" className="item">
+        Dashboard
       </Link>
+      {/*
+
       <Link to="professor/grades" className="item">
         Calificaciones
       </Link>
+      */ 
+
+      }
     </>
   );
 };

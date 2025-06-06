@@ -23,12 +23,11 @@ const FormSendEmail = ({
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (data) => {
-    console.log(errorMessage);
+
     sendEmailRecoveryPassword({ email: data.email });
   };
 
   useEffect(() => {
-    console.log(errorMessage);
     if (isSubmitSuccessful && successMessage) {
       const timer = setTimeout(() => {
         clearAllMessages();
