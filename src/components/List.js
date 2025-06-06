@@ -1,18 +1,12 @@
-//voy a listar los cursos y las calificaciones
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-import PopUpSucess from "./popups/PopUpSucess";
-import PopUpFailure from "./popups/PopUpFailure";
 import PopUpDelete from "./popups/PopUpDelete";
 
 const List = ({
   items = [],
   deleteItem,
   editBasePath = "/",
-  renderItem, //enntidad a dibujar,
-  successMessage,
-  deleteUserMessage,
+  renderItem, 
   message,
   textBtnDelete = "Eliminar",
 }) => {

@@ -33,8 +33,8 @@ const FomrRegisterStudent = ({
     if (successMessage) {
       const timer = setTimeout(() => {
         clearAllMessages();
-        navigate("/");
-      }, 9000);
+        navigate("/login");
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [successMessage, navigate, clearAllMessages]);

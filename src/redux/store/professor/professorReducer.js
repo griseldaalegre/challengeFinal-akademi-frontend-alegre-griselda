@@ -19,8 +19,7 @@ import {
   GET_GRADE_FAILURE,
   ADD_GRADE_REQUEST,
   ADD_GRADE_SUCCESS,
-  ADD_GRADE_FAILURE,
-  EDIT_GRADE_REQUEST,
+  //EDIT_GRADE_REQUEST,
   EDIT_GRADE_SUCCESS,
   EDIT_GRADE_FAILURE
 } from "./type";
@@ -207,43 +206,42 @@ export default function statesReducer(state = initialState, action) {
         successMessage: null,
       };
 
-    case ADD_GRADE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        successMessage: action.payload.message,
-        error: null,
-      };
-
-    case ADD_GRADE_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-        successMessage: null,
-      };
-
-    case EDIT_GRADE_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-        successMessage: null,
-      };
-
-
-      case EDIT_GRADE_SUCCESS:
+      case ADD_GRADE_SUCCESS:
         return {
           ...state,
-          grades: state.grades.map((grade) =>
-            grade._id === action.payload.updatedData._id
-              ? action.payload.updatedData
-              : grade
-          ),
-          successMessage: action.payload.message,
           loading: false,
+          grades: [...state.grades, action.payload.grade], // 👈 correcto
+          successMessage: action.payload.message,
+          error: null,
         };
       
+      
+        case EDIT_GRADE_SUCCESS:
+          return {
+            ...state,
+            grades: state.grades.map((grade) =>
+              grade._id === action.payload.grade._id
+                ? action.payload.grade
+                : grade
+            ),
+            successMessage: action.payload.message,
+            loading: false,
+          };
+        
+        
+
+          case EDIT_GRADE_SUCCESS:
+            return {
+              ...state,
+              grades: state.grades.map((grade) =>
+                grade._id === action.payload.grade._id
+                  ? action.payload.grade
+                  : grade
+              ),
+              successMessage: action.payload.message,
+              loading: false,
+            };
+          
 
 
     case EDIT_GRADE_FAILURE:

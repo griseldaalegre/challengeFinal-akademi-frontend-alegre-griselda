@@ -31,7 +31,6 @@ const FormCourse = ({ courses, addCourse, editCourse, profesorAuth }) => {
         setValue("price", courseToEdit.price);
         setValue("capacity", courseToEdit.capacity);
       }
-
     }
   }, [id, courses, setValue]);
 
@@ -40,13 +39,19 @@ const FormCourse = ({ courses, addCourse, editCourse, profesorAuth }) => {
       data.professor = profesorAuth._id;
     }
 
+    // ✅ Forzamos conversión de tipos
+    data.price = Number(data.price);
+    data.capacity = Number(data.capacity);
+
+    console.log("DATA A ENVIAR:", data);
+
     if (id) {
       await editCourse(id, data);
     } else {
       await addCourse(data);
     }
 
-    navigate("/professor");
+    navigate("/professor/dashboard");
   };
 
   return (

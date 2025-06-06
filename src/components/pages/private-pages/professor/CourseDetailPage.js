@@ -9,7 +9,7 @@ import {
 } from "../../../../redux/store/professor/professorActions";
 import ListItems from "../../../ListIems";
 import RenderEnrollment from "../../../RenderEnrollment";
-import Loading from"../../../Loading";
+import Loading from "../../../Loading";
 const CourseDetailPage = ({
   enrollments,
   grades,
@@ -27,28 +27,30 @@ const CourseDetailPage = ({
     getEnrollmentsByCourse(paramId);
     getGradesByCourse(paramId);
   }, [paramId, getEnrollmentsByCourse, getGradesByCourse]);
-  
 
- 
-  
+  useEffect(() => console.log(grades))
+
   const handleSubmitGrade = (studentId, score) => {
-    // Buscar la nota correspondiente en la lista de notas
     const gradeOfStudent = grades.find(
-      (g) => g.student === studentId && g.course === paramId
+      (g) => String(g.student) === String(studentId) && String(g.course) === String(paramId)
     );
-  
+    
+
     if (gradeOfStudent) {
-      // Si ya hay nota, la actualizo
       editGrade(gradeOfStudent._id, { score });
     } else {
-      // Si no hay nota, la creo
       addGrade({ student: studentId, course: paramId, score });
     }
+
   };
-  
-  const enrollmentsWithGrades = enrollments.map((enrollment) => {
+
+  const enrollmentsWithGrades = enrollments
+  .filter((enrollment) => enrollment.student && enrollment.student._id)
+  .map((enrollment) => {
     const grade = grades.find(
-      (g) => g.student === enrollment.student._id && g.course === paramId
+      (g) =>
+        String(g.student) === String(enrollment.student._id) &&
+        String(g.course) === String(paramId)
     );
     return {
       ...enrollment,
@@ -68,7 +70,7 @@ const CourseDetailPage = ({
     <div className="ui container">
       <h2 className="ui dividing header">Alumnos inscriptos</h2>
       {loading ? (
-       <Loading/>
+        <Loading />
       ) : (
         <ListItems items={enrollmentsWithGrades} renderItem={renderItem} />
       )}

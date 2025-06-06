@@ -2,7 +2,7 @@ import React from "react";
 
 const ListItems = ({
   items = [],
-  renderItem, //enntidad a dibujar
+  renderItem, 
 }) => {
   return (
     <div className="ui middle aligned divided list">

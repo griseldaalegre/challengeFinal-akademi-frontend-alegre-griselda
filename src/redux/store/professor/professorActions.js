@@ -171,11 +171,11 @@ export const editGrade = (gradeId, updatedData) => async (dispatch) => {
     dispatch({
       type: EDIT_GRADE_SUCCESS,
       payload: {
-        id: gradeId,
-        updatedData: response.data,
-        message: response?.data?.message,
+        grade: response.data.grade, // ✅ ahora sí el reducer puede acceder a .grade
+        message: response.data.message,
       },
     });
+    
   } catch (error) {
     dispatch({
       type: EDIT_GRADE_FAILURE,

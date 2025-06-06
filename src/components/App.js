@@ -45,7 +45,6 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
         <NavBar />
         <Routes>
           {/* publicas */}
-
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<FomrRegisterStudent />} />
           <Route path="/recover-password" element={<FormSendEmail />} />
@@ -60,7 +59,6 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
             element={<PrivateRoute allowedRoles={["superadmin"]} />}
           >
             <Route index element={<Navigate to="dashboard" replace />} />
-
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="users" element={<UserListPage />} />
             <Route path="users/:id" element={<FormUser />} />
@@ -78,10 +76,7 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
             <Route path="courses" element={<DashboadProfessor />} />
             <Route path="courses/add" element={<FormCourse />} />
             <Route path="courses/:id" element={<FormCourse />} />
-            <Route
-              path="courses/detail/:id"
-              element={<CourseDetailPage />}
-            />
+            <Route path="courses/detail/:id" element={<CourseDetailPage />} />
           </Route>
 
           <Route
@@ -91,7 +86,10 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
             <Route index element={<Navigate to="courses" replace />} />
 
             <Route path="courses" element={<DashboadStudent />} />
-            <Route path="courses/detail/:id" element={<CourseStudentDetailPage />} />
+            <Route
+              path="courses/detail/:id"
+              element={<CourseStudentDetailPage />}
+            />
             <Route path="mycourses" element={<MyCoursePage />} />
             <Route path="grades" element={<GradesStudentPage />} />
           </Route>

@@ -23,13 +23,20 @@ const CourseStudentDetailPage = ({
   useEffect(() => {
     if (paramId) {
       getCourse(paramId);
-  
-      if (!enrollments.length && userId) {
-        getEnrollments(userId); 
-      }
     }
-  }, [paramId, getCourse, getEnrollments, enrollments, userId]);
+  }, [paramId, getCourse]);
   
+  useEffect(() => {
+    if (userId) {
+      getEnrollments(userId);
+    }
+  }, [userId, getEnrollments]);
+  
+  useEffect(() => {
+    if (paramId) {
+      getCourse(paramId);
+    }
+  }, [enrollments.length, paramId, getCourse]);
   
 
   const isEnrolled = enrollments.find(

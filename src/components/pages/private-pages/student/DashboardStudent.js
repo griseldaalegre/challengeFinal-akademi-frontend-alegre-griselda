@@ -15,7 +15,7 @@ const DashboardStudent = ({
   getCourses,
   deleteCourse,
   clearAllMessages,
-  loading
+  loading,
 }) => {
   const idProfessor = professorAuth._id;
 
@@ -34,8 +34,8 @@ const DashboardStudent = ({
 
   useEffect(() => {
     getCourses(page, getCurrentFilters());
-  }, [, page, category, level, price, getCourses]);
- return (
+  }, [ page, category, level, price, getCourses]);
+  return (
     <div className="ui container">
       <h2 className="ui dividing header">Listado de Cursos</h2>
       <>
@@ -87,10 +87,7 @@ const DashboardStudent = ({
           </div>
         )}
 
-        <ListaCursoEstudiante
-          items={courses}
-          renderItem={RenderCourses}
-        />
+        <ListaCursoEstudiante items={courses} renderItem={RenderCourses} />
 
         {pages > 1 && (
           <Pagination

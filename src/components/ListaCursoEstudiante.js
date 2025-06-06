@@ -2,33 +2,24 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 const ListaCursoEstudiante = ({
   items = [],
-  renderItem, //enntidad a dibujar
+  renderItem,
   showButton = true,
 }) => {
-  const [itemDetalle, setitemDetalle] = useState(false);
-
-
-
   return (
     <div className="ui middle aligned divided list">
       {items.map((item) => (
         <div key={item._id} className="item">
           <div className="right floated content">
-         <Link
+            <Link
               to={`/student/courses/detail/${item._id}`}
               className="right floated content"
             >
-              
-              {showButton && (
-  <div className="ui button">Ver Detalle</div>
-)}
-      </Link>
+              {showButton && <div className="ui button">Ver Detalle</div>}
+            </Link>
           </div>
           {renderItem(item)}
         </div>
       ))}
-
-
     </div>
   );
 };
