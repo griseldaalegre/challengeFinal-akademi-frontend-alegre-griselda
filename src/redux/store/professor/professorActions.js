@@ -21,6 +21,9 @@ import {
   ADD_GRADE_REQUEST,
   ADD_GRADE_SUCCESS,
   ADD_GRADE_FAILURE,
+  EDIT_GRADE_REQUEST,
+  EDIT_GRADE_SUCCESS,
+  EDIT_GRADE_FAILURE
 } from "./type";
 
 export const getCourses =
@@ -143,7 +146,6 @@ export const getEnrollmentsByCourse =
 
 export const addGrade = (gradeData) => async (dispatch) => {
   dispatch({ type: ADD_GRADE_REQUEST });
-
   try {
     const response = await api.post("/grades", gradeData);
     dispatch({
@@ -154,6 +156,30 @@ export const addGrade = (gradeData) => async (dispatch) => {
     dispatch({
       type: ADD_GRADE_FAILURE,
       payload: error.response?.data?.message || "Error al cargar calificación",
+    });
+  }
+};
+
+
+// actions/gradeActions.js
+export const editGrade = (gradeId, updatedData) => async (dispatch) => {
+  dispatch({ type: EDIT_GRADE_REQUEST });
+
+  try {
+    const response = await api.patch(`/grades/student/${gradeId}`, updatedData);
+
+    dispatch({
+      type: EDIT_GRADE_SUCCESS,
+      payload: {
+        grade: response.data.grade, // ✅ ahora sí el reducer puede acceder a .grade
+        message: response.data.message,
+      },
+    });
+    
+  } catch (error) {
+    dispatch({
+      type: EDIT_GRADE_FAILURE,
+      payload: error.response?.data?.message || error.message || "Error al editar calificación",
     });
   }
 };

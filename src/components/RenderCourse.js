@@ -1,18 +1,17 @@
-const RenderCourse = (course) => (
-  <div className="content">
-    <div>
-      <strong>Título:</strong> {course.title}
+import React from "react";
+
+const RenderCourse = ({ title, category, professor, price }) => {
+  return (
+    <div className="ui large card">
+      <div className="content">
+        <h3 className="header">{title}</h3>
+        <p><strong>Categoría:</strong> {category}</p>
+        <p><strong>Profesor:</strong> {professor?.name ?? "sdasdsad"}</p>
+        <p><strong>Precio:</strong> ${price}</p>
+      </div>
     </div>
-    <div>
-      <strong>Categoría:</strong> {course.category}
-    </div>
-    <div>
-      <strong>Profesor:</strong> {course.professor?.name ?? "N/A"}
-    </div>
-    <div>
-      <strong>Precio:</strong> {course.price}
-    </div>
-  </div>
-);
+  );
+};
 
 export default RenderCourse;
+

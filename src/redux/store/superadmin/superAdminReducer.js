@@ -14,22 +14,28 @@ import {
   GET_COURSES_REQUEST,
   GET_COURSES_SUCCESS,
   GET_COURSES_FAILURE,
+  UPDATE_USER_REQUEST,
+UPDATE_USER_SUCCESS,
+UPDATE_USER_FAILURE,
+
 } from "./types";
 
 const initialState = {
   users: [],
   courses: [], // ✅ Añadido campo separado para los cursos
-
+  
   total: 0,
   page: 1,
   pages: 1,
   states: {},
   loading: false,
   successMessage: null,
+
   error: null,
 };
 
-export default function statesReducer(state = initialState, action) {
+//cambiar nombre abtes era stareReducer
+export default function superAdminReducer(state = initialState, action) {
   switch (action.type) {
     case GET_STATES_GENERAL_REQUEST:
       return {
@@ -53,15 +59,13 @@ export default function statesReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.message,
-        successMessage: null,
       };
 
     case GET_USERS_REQUEST:
       return {
         ...state,
         loading: true,
-        error: null,
-        successMessage: null,
+        error: null
       };
 
     case GET_USERS_SUCCESS:
@@ -72,8 +76,6 @@ export default function statesReducer(state = initialState, action) {
         page: action.payload.page,
         pages: action.payload.pages,
         total: action.payload.total,
-        error: null,
-        successMessage: action.payload.message,
       };
 
     case GET_USERS_FAILURE:
@@ -81,15 +83,12 @@ export default function statesReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.message,
-        successMessage: null,
       };
 
     case DELETE_USER_REQUEST:
       return {
         ...state,
         loading: true,
-        error: null,
-        successMessage: null,
       };
 
     case DELETE_USER_SUCCESS:
@@ -97,14 +96,14 @@ export default function statesReducer(state = initialState, action) {
         ...state,
         loading: false,
         users: state.users.filter((user) => user._id !== action.payload),
-        successMessage: action.message,
+        successMessage: action.payload.message,
       };
 
     case DELETE_USER_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.error,
+        error: action.message,
       };
     case ADD_USER_REQUEST:
       return {
@@ -145,8 +144,6 @@ export default function statesReducer(state = initialState, action) {
           page: action.payload.page,
           pages: action.payload.pages,
           total: action.payload.total,
-          error: null,
-          successMessage: action.payload.message,
         };
       
 
@@ -157,7 +154,33 @@ export default function statesReducer(state = initialState, action) {
         error: action.message,
         successMessage: null,
       };
-    default:
+      case UPDATE_USER_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          error: null,
+          successMessage: null,
+        };
+      
+      case UPDATE_USER_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          users: state.users.map((user) =>
+            user._id === action.payload.id ? action.payload.updatedData : user
+          ),
+          successMessage: action.payload.message
+        };
+      
+      case UPDATE_USER_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.message,
+        };
+      
+    
+      default:
       return state;
   }
 }
