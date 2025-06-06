@@ -65,7 +65,7 @@ const UserListPage = ({
         </div>
       </div>
       <Link
-            to={"/users/add"}
+            to={"/superadmin/users/add"}
             className="right floated content"
           >
             <div className="ui button">Crear usuario</div>
