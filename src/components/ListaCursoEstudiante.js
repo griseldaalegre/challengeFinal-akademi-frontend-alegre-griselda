@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-const ListItems = ({
+const ListaCursoEstudiante = ({
   items = [],
   renderItem, //enntidad a dibujar
+  showButton = true,
 }) => {
   const [itemDetalle, setitemDetalle] = useState(false);
 
@@ -13,12 +14,15 @@ const ListItems = ({
       {items.map((item) => (
         <div key={item._id} className="item">
           <div className="right floated content">
-           <Link
-              to={`/student/courses/${item._id}`}
+         <Link
+              to={`/student/courses/detail/${item._id}`}
               className="right floated content"
             >
-              <div className="ui button">Ver Detalle</div>
-            </Link>
+              
+              {showButton && (
+  <div className="ui button">Ver Detalle</div>
+)}
+      </Link>
           </div>
           {renderItem(item)}
         </div>
@@ -29,4 +33,4 @@ const ListItems = ({
   );
 };
 
-export default ListItems;
+export default ListaCursoEstudiante;

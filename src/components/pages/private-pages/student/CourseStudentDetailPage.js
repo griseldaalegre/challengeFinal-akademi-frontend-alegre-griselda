@@ -36,17 +36,13 @@ const CourseStudentDetailPage = ({
     (e) => e.course === paramId && e.student === userId
   );
   
-  
-  console.log(enrollments)
-  console.log(isEnrolled)
+
 
   const handleEnroll = () => {
-    console.log("Intentando inscribirse...");
     if (paramId && userId) enrollInCourse(paramId, userId);
   };
   
   const handleUnenroll = () => {
-    console.log("Intentando desinscribirse...");
     if (isEnrolled?._id) {
       cancelEnrollment(isEnrolled._id); 
     }

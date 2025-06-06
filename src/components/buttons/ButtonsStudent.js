@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { Link } from "react-router-dom";
 
 const ButtonsStudent = ({ courseId, isEnrolled, onEnroll, onUnenroll }) => {
@@ -28,3 +28,4 @@ const ButtonsStudent = ({ courseId, isEnrolled, onEnroll, onUnenroll }) => {
 };
 
 export default ButtonsStudent;
+*/

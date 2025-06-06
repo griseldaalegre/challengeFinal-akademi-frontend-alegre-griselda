@@ -146,7 +146,6 @@ export const getEnrollmentsByCourse =
 
 export const addGrade = (gradeData) => async (dispatch) => {
   dispatch({ type: ADD_GRADE_REQUEST });
-
   try {
     const response = await api.post("/grades", gradeData);
     dispatch({
@@ -162,24 +161,25 @@ export const addGrade = (gradeData) => async (dispatch) => {
 };
 
 
-export const editGrade = (id, updatedData) => async (dispatch) => {
+// actions/gradeActions.js
+export const editGrade = (gradeId, updatedData) => async (dispatch) => {
   dispatch({ type: EDIT_GRADE_REQUEST });
 
   try {
-    const response = await api.patch(`/grades/student/${id}`, updatedData);
+    const response = await api.patch(`/grades/student/${gradeId}`, updatedData);
 
     dispatch({
       type: EDIT_GRADE_SUCCESS,
       payload: {
-        id,
+        id: gradeId,
         updatedData: response.data,
-        message: "Nota actualizada con éxito",
+        message: response?.data?.message,
       },
     });
   } catch (error) {
     dispatch({
       type: EDIT_GRADE_FAILURE,
-      payload: error.response?.data?.message || "Error al editar calificación",
+      payload: error.response?.data?.message || error.message || "Error al editar calificación",
     });
   }
 };

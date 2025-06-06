@@ -104,8 +104,7 @@ export const getGrades =
     }
   };
 
-// POST ENROLLMENT - Inscribirse a un curso
-// POST ENROLLMENT - Inscribirse a un curso
+
 export const enrollInCourse = (courseId, studentId) => async (dispatch) => {
   dispatch({ type: ENROLL_COURSE_REQUEST });
 

@@ -3,52 +3,58 @@
  · Total de alumnos inscriptos
  · Botón"Crear Nuevo Curso"
  · Calificaciones*/
- import React, { useEffect, useState } from "react";
- import { connect } from "react-redux";
- import { Link } from "react-router-dom";
- import {
-   getCourses,
-   deleteCourse,
- } from "../../../../redux/store/professor/professorActions";
- 
- import List from "../../../List";
- import RenderCourses from "../../../RenderCourse"; // ruta correcta según dónde esté
- import Pagination from "../../../Pagination";
- 
- const DashboadProfessor = ({
-   professorAuth,
-   courses,
-   page,
-   pages,
-   getCourses,
-   deleteCourse,
-   clearAllMessages,
- }) => {
-   const idProfessor = professorAuth._id;
- 
-   const [category, setCategory] = useState("");
-   const [level, setLevel] = useState("");
-   const [price, setPrice] = useState("");
- 
-   // ✅ Función auxiliar para armar filtros actuales
-   const getCurrentFilters = () => {
-     const f = {};
-     if (category) f.category = category;
-     if (level) f.level = level;
-     if (price) f.price = price;
-     return f;
-   };
-   console.log(courses)
-   useEffect(() => {
-     if (idProfessor) {
-       getCourses(idProfessor, page, getCurrentFilters());
-     }
-   }, [idProfessor, page, category, level, price, getCourses]);
-   return (
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  getCourses,
+  deleteCourse,
+} from "../../../../redux/store/professor/professorActions";
+
+import List from "../../../List";
+import RenderCourses from "../../../RenderCourse"; // ruta correcta según dónde esté
+import Pagination from "../../../Pagination";
+
+const DashboadProfessor = ({
+  professorAuth,
+  courses,
+  page,
+  pages,
+  getCourses,
+  deleteCourse,
+  clearAllMessages,
+}) => {
+  const idProfessor = professorAuth._id;
+
+  const [category, setCategory] = useState("");
+  const [level, setLevel] = useState("");
+  const [price, setPrice] = useState("");
+
+
+  const getCurrentFilters = () => {
+    const f = {};
+    if (category) f.category = category;
+    if (level) f.level = level;
+    if (price) f.price = price;
+    return f;
+  };
+
+  useEffect(() => {
+    if (idProfessor) {
+      getCourses(idProfessor, page, getCurrentFilters());
+    }
+  }, [idProfessor, page, category, level, price, getCourses]);
+  return (
     <div className="ui container">
-      <h2 className="ui dividing header">Listado de Cursos</h2>
 
       <div className="ui form">
+        <h1 className="ui header">
+          <i className="chart bar icon"></i>
+          <div className="content">
+            Mis cursos
+            <div className="sub header">listado de</div>
+          </div>
+        </h1>
         <div className="fields">
           <div className="field">
             <label>Categoría</label>
@@ -102,10 +108,11 @@
       <List
         items={courses}
         deleteItem={deleteCourse}
-        editBasePath="/professor/courses/enrollment"
+        editBasePath="/professor/courses"
         renderItem={RenderCourses}
+        message={"¿Seguro que quiere eliminar este curso?"}
       />
-
+ 
       {pages > 1 && (
         <Pagination
           totalPages={pages}
@@ -118,21 +125,20 @@
     </div>
   );
 };
- 
- const mapStateToProps = (state) => ({
-   professorAuth: state.auth.user,
-   courses: state.professor.courses,
-   loading: state.professor.loading,
-   errorMessage: state.professor.error,
-   successMessage: state.professor.successMessage,
-   page: state.professor.page,
-   pages: state.professor.pages,
- });
- 
- const mapDispatchToProps = {
-   getCourses,
-   deleteCourse,
- };
- 
- export default connect(mapStateToProps, mapDispatchToProps)(DashboadProfessor);
- 
+
+const mapStateToProps = (state) => ({
+  professorAuth: state.auth.user,
+  courses: state.professor.courses,
+  loading: state.professor.loading,
+  errorMessage: state.professor.error,
+  successMessage: state.professor.successMessage,
+  page: state.professor.page,
+  pages: state.professor.pages,
+});
+
+const mapDispatchToProps = {
+  getCourses,
+  deleteCourse,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboadProfessor);

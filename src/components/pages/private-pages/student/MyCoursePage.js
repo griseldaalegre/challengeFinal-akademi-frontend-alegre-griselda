@@ -1,7 +1,3 @@
-/* · Alumno:
- · Miscursos inscritos
- · Catálogo de cursos disponibles
- · Visualización de calificaciones*/
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,7 +6,7 @@ import { getEnrollments } from "../../../../redux/store/student/studentActions.j
 import ListaCursoEstudiante from "../../../ListaCursoEstudiante.js";
 import RenderCourses from "../../../RenderCourse";
 import Pagination from "../../../Pagination";
-
+import Loading from "../../../Loading.js";
 const MyCoursePage = ({
   studentAuth,
   enrollments,
@@ -19,9 +15,9 @@ const MyCoursePage = ({
   getEnrollments,
   deleteCourse,
   clearAllMessages,
+  loading,
 }) => {
   const studentId = studentAuth._id;
-  console.log("siejrfwejriewjiew")
   const [category, setCategory] = useState("");
   const [level, setLevel] = useState("");
   const [price, setPrice] = useState("");
@@ -34,72 +30,90 @@ const MyCoursePage = ({
     if (price) f.price = price;
     return f;
   };
-  console.log();
-  console.log(enrollments);
+
   useEffect(() => {
     if (studentId) {
       getEnrollments(studentId, page, getCurrentFilters());
     }
   }, [studentId, page, category, level, price, getEnrollments]);
-  
+  const renderEnrollment = (enrollment) => {
+    const course = enrollment.course;
+    return (
+      <RenderCourses
+        title={course.title}
+        category={course.category}
+        professor={course.professor}
+        price={course.price}
+      />
+    );
+  };
+
   return (
     <div className="ui container">
       <h2 className="ui dividing header">Listado de Cursos</h2>
 
-      <div className="ui form">
-        <div className="fields">
-          <div className="field">
-            <label>Categoría</label>
-            <select
-              className="ui dropdown"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">Categoría</option>
-              <option value="web">Desarrollo Web</option>
-              <option value="cyber">Ciberseguridad</option>
-            </select>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="ui form">
+            <div className="fields">
+              <div className="field">
+                <label>Categoría</label>
+                <select
+                  className="ui dropdown"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="">Categoría</option>
+                  <option value="web">Desarrollo Web</option>
+                  <option value="cyber">Ciberseguridad</option>
+                </select>
+              </div>
+
+              <div className="field">
+                <label>Nivel</label>
+                <select
+                  className="ui dropdown"
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value)}
+                >
+                  <option value="">Nivel</option>
+                  <option value="beginner">Principiante</option>
+                  <option value="intermediate">Medio</option>
+                  <option value="advanced">Avanzado</option>
+                </select>
+              </div>
+
+              <div className="field">
+                <label>Precio</label>
+                <select
+                  className="ui dropdown"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                >
+                  <option value="">Precio</option>
+                  <option value="0">Gratuito</option>
+                  <option value="100">Pago</option>
+                </select>
+              </div>
+            </div>
           </div>
-
-          <div className="field">
-            <label>Nivel</label>
-            <select
-              className="ui dropdown"
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-            >
-              <option value="">Nivel</option>
-              <option value="beginner">Principiante</option>
-              <option value="intermediate">Medio</option>
-              <option value="advanced">Avanzado</option>
-            </select>
-          </div>
-
-          <div className="field">
-            <label>Precio</label>
-            <select
-              className="ui dropdown"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            >
-              <option value="">Precio</option>
-              <option value="0">Gratuito</option>
-              <option value="100">Pago</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <ListaCursoEstudiante items={enrollments} renderItem={RenderCourses} />
-
-      {pages > 1 && (
-        <Pagination
-          totalPages={pages}
-          currentPage={page}
-          onPageChange={(newPage) =>
-            getEnrollments(newPage, getCurrentFilters())
-          }
-        />
+          <ListaCursoEstudiante
+            items={enrollments}
+            renderItem={renderEnrollment}
+            showButton={false}
+          />
+          {pages > 1 && (
+            <Pagination
+              totalPages={pages}
+              currentPage={page}
+              onPageChange={(newPage) =>
+                getEnrollments(newPage, getCurrentFilters())
+              }
+            />
+          )}
+        </>
       )}
     </div>
   );

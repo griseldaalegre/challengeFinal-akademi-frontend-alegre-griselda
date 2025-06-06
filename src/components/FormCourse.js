@@ -31,7 +31,7 @@ const FormCourse = ({ courses, addCourse, editCourse, profesorAuth }) => {
         setValue("price", courseToEdit.price);
         setValue("capacity", courseToEdit.capacity);
       }
-      console.log(courseToEdit);
+
     }
   }, [id, courses, setValue]);
 
@@ -134,7 +134,7 @@ const FormCourse = ({ courses, addCourse, editCourse, profesorAuth }) => {
           <button
             className="ui button"
             type="button"
-            onClick={() => navigate("/courses")}
+            onClick={() => navigate("/professor")}
           >
             Cancelar
           </button>

@@ -5,11 +5,11 @@ import {
   addGrade,
   getEnrollmentsByCourse,
   getGradesByCourse,
-  editGrade
+  editGrade,
 } from "../../../../redux/store/professor/professorActions";
 import ListItems from "../../../ListIems";
 import RenderEnrollment from "../../../RenderEnrollment";
-
+import Loading from"../../../Loading";
 const CourseDetailPage = ({
   enrollments,
   grades,
@@ -19,7 +19,7 @@ const CourseDetailPage = ({
   getEnrollmentsByCourse,
   getGradesByCourse,
   addGrade,
-  editGrade
+  editGrade,
 }) => {
   const { id: paramId } = useParams();
 
@@ -27,11 +27,25 @@ const CourseDetailPage = ({
     getEnrollmentsByCourse(paramId);
     getGradesByCourse(paramId);
   }, [paramId, getEnrollmentsByCourse, getGradesByCourse]);
+  
 
+ 
+  
   const handleSubmitGrade = (studentId, score) => {
-    addGrade({ course: paramId, student: studentId, score });
+    // Buscar la nota correspondiente en la lista de notas
+    const gradeOfStudent = grades.find(
+      (g) => g.student === studentId && g.course === paramId
+    );
+  
+    if (gradeOfStudent) {
+      // Si ya hay nota, la actualizo
+      editGrade(gradeOfStudent._id, { score });
+    } else {
+      // Si no hay nota, la creo
+      addGrade({ student: studentId, course: paramId, score });
+    }
   };
-
+  
   const enrollmentsWithGrades = enrollments.map((enrollment) => {
     const grade = grades.find(
       (g) => g.student === enrollment.student._id && g.course === paramId
@@ -43,14 +57,18 @@ const CourseDetailPage = ({
   });
 
   const renderItem = (enrollment) => (
-    <RenderEnrollment enrollment={enrollment} onSubmitGrade={handleSubmitGrade}  onEditGrade={editGrade}  />
+    <RenderEnrollment
+      enrollment={enrollment}
+      onSubmitGrade={handleSubmitGrade}
+      onEditGrade={editGrade}
+    />
   );
 
   return (
     <div className="ui container">
       <h2 className="ui dividing header">Alumnos inscriptos</h2>
       {loading ? (
-        <p>Cargando...</p>
+       <Loading/>
       ) : (
         <ListItems items={enrollmentsWithGrades} renderItem={renderItem} />
       )}
@@ -70,7 +88,7 @@ const mapDispatchToProps = {
   getEnrollmentsByCourse,
   getGradesByCourse,
   addGrade,
-  editGrade
+  editGrade,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseDetailPage);

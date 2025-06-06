@@ -69,8 +69,13 @@ export const editUser = (id, updatedData) => async (dispatch) => {
 
     dispatch({
       type: UPDATE_USER_SUCCESS,
-      payload: { id, updatedData: response.data },
+      payload: {
+        id,
+        updatedData: response.data.user, // o como venga tu user actualizado
+        message: response.data.message,  // 👈 asegurate que el back lo mande
+      },
     });
+    
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAILURE,
@@ -87,13 +92,16 @@ export const deleteUser = (id) => async (dispatch) => {
 
     dispatch({
       type: DELETE_USER_SUCCESS,
-      payload: id,
-      message: response.data.message, // mensaje de éxito
+      payload: {
+        id,
+        message: response.data.message,
+      },
     });
+    
   } catch (error) {
     dispatch({
       type: DELETE_USER_FAILURE,
-      error: error.response?.data?.message || "Error al eliminar usuario", // mensaje de error
+      message: error.response?.data?.message || "Error al eliminar usuario", // mensaje de error
     });
   }
 };
@@ -102,7 +110,7 @@ export const addUser = (userData) => async (dispatch) => {
   dispatch({ type: ADD_USER_REQUEST });
 
   try {
-    console.log("true actui super")
+
     const response = await api.post("/users", {
       ...userData,
     });

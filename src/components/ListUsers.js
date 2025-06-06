@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import PopUpSucess from "../components/popups/PopUpSucess";
-import PopUpFailure from "../components/popups/PopUpFailure";
 import userImage from "../../src/assets/user.JPG";
 import PopUpDelete from "../components/popups/PopUpDelete";
 
@@ -9,9 +7,6 @@ const ListUsers = ({
   users = [],
   deleteUser,
   sendEmailRecoveryPassword,
-  recoveryMessage,
-  deleteUserMessage,
-  clearAllMessages,
   editBasePath = "/superadmin",
 }) => {
   const [userToDelete, setUserToDelete] = useState(null);
@@ -83,8 +78,6 @@ const ListUsers = ({
         message={"¿Seguro que querés eliminar este usuario?"}
       />
 
-      {recoveryMessage && <PopUpSucess message={recoveryMessage} />}
-      {deleteUserMessage && <PopUpFailure message={deleteUserMessage} />}
     </div>
   );
 };

@@ -9,7 +9,7 @@ const ListItems = ({
       {items.map((item) => (
         <div key={item._id} className="item">
           <div className="right floated content"></div>
-          <p> {renderItem(item)}</p>
+           {renderItem(item)}
         </div>
       ))}
     </div>

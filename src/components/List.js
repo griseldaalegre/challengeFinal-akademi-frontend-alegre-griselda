@@ -55,7 +55,7 @@ const List = ({
               <div className="ui button">Editar</div>
             </Link>
             <Link
-              to={`${editBasePath}/${item._id}`}
+              to={`${editBasePath}/detail/${item._id}`}
               className="right floated content"
             >
               <div className="ui button">Ver Detalle</div>
@@ -73,8 +73,8 @@ const List = ({
         message={message}
       />
 
-      {successMessage && <PopUpSucess message={successMessage} />}
-      {deleteUserMessage && <PopUpFailure message={deleteUserMessage} />}
+    
+    
     </div>
   );
 };

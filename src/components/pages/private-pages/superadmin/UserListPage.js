@@ -7,69 +7,90 @@ import {
 } from "../../../../redux/store/superadmin/superAdminActions";
 import { sendEmailRecoveryPassword } from "../../../../redux/store/recover-password-email/forgotPasswordActions";
 import { clearAllMessages } from "../../../../redux/store/shared/clearMessagesActions";
-
 import ListUsers from "../../../ListUsers";
 import Pagination from "../../../Pagination";
 import Search from "../../../Search";
-
+import RoleFilterButtons from "../../../buttons/RolesFilterButtons";
+import MessageModal from "../../../modals/MessageModal";
 const UserListPage = ({
   users,
   page,
   pages,
   deleteUserMessage,
-  recoveryMessage,
   getUsers,
   deleteUser,
   sendEmailRecoveryPassword,
   clearAllMessages,
+  recoveryMessage,
+  successMessage,
 }) => {
-  const [search, setSearch] = useState(""); 
-  const [role, setRole] = useState(""); 
+  const [search, setSearch] = useState("");
+  const [role, setRole] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(true);
+
 
   useEffect(() => {
     clearAllMessages();
-
     const filters = {};
-    if (search) filters.name = search; 
-    if (role) filters.role = role; 
+    if (search) filters.name = search;
+    if (role) filters.role = role;
+    getUsers(page, filters);
+  }, [getUsers, clearAllMessages, page, search, role]);
 
-    getUsers(page, filters); 
-  }, [getUsers, clearAllMessages, page, search, role]); 
+  useEffect(() => {
+
+
+    if (successMessage) {
+      setModalMessage(successMessage);
+      setIsSuccess(true); 
+      setModalOpen(true);
+    }
+  
+    if (recoveryMessage) {
+      setModalMessage(recoveryMessage);
+      setIsSuccess(true);
+      setModalOpen(true);
+    }
+  }, [successMessage, recoveryMessage]);
+  
+
+
 
   const handleSearchChange = (value) => {
-    setSearch(value); 
+    setSearch(value);
   };
 
   return (
     <div>
       <div className="ui grid">
-        <div className="row">
+        <div className="row middle aligned">
           <div className="eight wide column left aligned">
-            <h2>Listado de Usuarios</h2>
+            <h2 className="ui header">Listado de Usuarios</h2>
           </div>
           <div className="eight wide column right aligned">
             <Search value={search} onChange={handleSearchChange} />
-
-            <select
-              className="ui dropdown"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              style={{ marginLeft: "1rem" }}
-            >
-              <option value="">Todos los roles</option>
-              <option value="superadmin">Super Admin</option>
-              <option value="student">Student</option>
-              <option value="professor">Professor</option>
-            </select>
           </div>
         </div>
+
+        <div className="row">
+        <Link
+              to={"/superadmin/users/add"}
+              className="right floated content"
+            >
+              <div className="ui button">Crear usuario</div>
+            </Link>
+          <div className="sixteen wide column center aligned">
+            <RoleFilterButtons selectedRole={role} onChange={setRole} />
+
+          </div>
+          
+        </div>
+        
       </div>
-      <Link
-            to={"/superadmin/users/add"}
-            className="right floated content"
-          >
-            <div className="ui button">Crear usuario</div>
-          </Link>
+
       <ListUsers
         users={users}
         deleteUser={deleteUser}
@@ -87,6 +108,18 @@ const UserListPage = ({
           onPageChange={(newPage) => getUsers(newPage)}
         />
       )}
+
+      <>
+        <MessageModal
+          open={modalOpen}
+          onClose={() => {
+            setModalOpen(false);
+            clearAllMessages();
+          }}
+          message={modalMessage}
+          success={isSuccess}
+        />
+      </>
     </div>
   );
 };
@@ -95,7 +128,7 @@ const mapStateToProps = (state) => ({
   users: state.superadmin.users,
   page: state.superadmin.page,
   pages: state.superadmin.pages,
-  deleteUserMessage: state.superadmin.deleteUserMessage,
+  successMessage: state.superadmin.successMessage,
   recoveryMessage: state.recoverPassword.recoveryMessage,
 });
 

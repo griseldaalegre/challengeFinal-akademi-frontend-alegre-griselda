@@ -27,13 +27,9 @@ const FormResetPassword = ({
 
     if (token) {
       resetPassword(token, data.password);
-      console.log(errorMessage);
-      console.log(successMessage);
-      // setPopupVisible(true);
+   
       // navigate("/login");
-    } else {
-      alert("Token inválido");
-    }
+    } 
   };
 
   return (

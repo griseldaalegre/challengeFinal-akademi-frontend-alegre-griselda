@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 
 const ModalDetail = ({
   title = "Detalle",
@@ -36,4 +36,4 @@ const ModalDetail = ({
   );
 };
 
-export default ModalDetail;
+export default ModalDetail;*/

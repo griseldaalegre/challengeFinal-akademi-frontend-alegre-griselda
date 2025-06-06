@@ -20,19 +20,19 @@ const RenderEnrollment = ({ enrollment, onSubmitGrade }) => {
   return (
     <div className="ui card segment">
       <div className="ui header">
+      
+
         Alumno: {enrollment.student.name}
         <div className="sub header">Curso: {enrollment.course.title}</div>
       </div>
-
       {enrollment.grade && !isEditing ? (
         <>
           <p>
+          
+           
             <strong>Nota actual:</strong> {enrollment.grade.score}
           </p>
-          <button
-            className="ui blue button"
-            onClick={() => setIsEditing(true)}
-          >
+          <button className="ui blue button" onClick={() => setIsEditing(true)}>
             Editar nota
           </button>
         </>

@@ -84,7 +84,6 @@ export default function statesReducer(state = initialState, action) {
           (course) => course._id !== action.payload.id
         ),
         successMessage: action.payload.message,
-        error: null,
       };
 
     case DELETE_COURSE_FAILURE:

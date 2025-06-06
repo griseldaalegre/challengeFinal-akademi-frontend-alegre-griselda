@@ -17,15 +17,11 @@ const Navbar = ({ user, logout }) => {
             className="home icon"
             style={{ marginRight: "0.5rem", color: "#4183c4" }}
           ></i>
-          Inicio
+          VORTEX IT
         </Link>
 
         {user && (
           <>
-            <Link to="superadmin/dashboard" className="item">
-              Dashboard
-            </Link>
-
             {user.role === "superadmin" && <AdminNavbar />}
 
             {user.role === "professor" && <NavbarProfessor />}
@@ -44,7 +40,9 @@ const Navbar = ({ user, logout }) => {
           ) : (
             <>
               <div className="item">
-                <span style={{ fontWeight: "500" }}>Hola, {user.name}, {user.role}</span>
+                <span style={{ fontWeight: "500" }}>
+                  Hola, {user.name}, {user.role}
+                </span>
               </div>
               <div className="item">
                 <button onClick={logout} className="ui button">

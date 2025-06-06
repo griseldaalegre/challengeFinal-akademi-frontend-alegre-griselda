@@ -8,7 +8,7 @@ const PrivateRoute = ({ user, allowedRoles }) => {
     return <Navigate to="/login" />;
    
   }
-  console.log(user.role)
+
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     return <Navigate to="/access-denied" />;
   }

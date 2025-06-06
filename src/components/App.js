@@ -73,13 +73,13 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
             path="/professor"
             element={<PrivateRoute allowedRoles={["professor"]} />}
           >
-            <Route index element={<Navigate to="courses" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<DashboadProfessor />} />
             <Route path="courses" element={<DashboadProfessor />} />
             <Route path="courses/add" element={<FormCourse />} />
             <Route path="courses/:id" element={<FormCourse />} />
             <Route
-              path="courses/enrollment/:id"
+              path="courses/detail/:id"
               element={<CourseDetailPage />}
             />
           </Route>
@@ -91,7 +91,7 @@ const App = ({ loadUserFromToken, loading, authChecked }) => {
             <Route index element={<Navigate to="courses" replace />} />
 
             <Route path="courses" element={<DashboadStudent />} />
-            <Route path="courses/:id" element={<CourseStudentDetailPage />} />
+            <Route path="courses/detail/:id" element={<CourseStudentDetailPage />} />
             <Route path="mycourses" element={<MyCoursePage />} />
             <Route path="grades" element={<GradesStudentPage />} />
           </Route>
